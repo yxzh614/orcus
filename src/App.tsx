@@ -5,8 +5,10 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
+
 import { HomePage } from './pages/home';
 import { SelfChangePage } from './pages/selfChange';
+import { StockSearchPage } from './pages/stockSearch';
 
 function App() {
   return (
@@ -18,6 +20,9 @@ function App() {
           </Route>
           <Route exact path="/selfChange">
             <SelfChangePage />
+          </Route>
+          <Route exact path="/stockSearch">
+            <StockSearchPage />
           </Route>
         </Switch>
       </Router>
