@@ -9,6 +9,7 @@ import './App.css';
 import { HomePage } from './pages/home';
 import { SelfChangePage } from './pages/selfChange';
 import { StockSearchPage } from './pages/stockSearch';
+import { LoopDepPage } from './pages/loopDep';
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route exact path="/stockSearch">
             <StockSearchPage />
+          </Route>
+          <Route exact path="/loopDep">
+            <LoopDepPage />
           </Route>
         </Switch>
       </Router>
