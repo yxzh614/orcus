@@ -24,11 +24,31 @@ export const StockSearchPage: React.FC = () => {
       <Field name="quantity">
         <TextField placeholder="数量" />
       </Field>
+      <TotalQuantity />
       <PrimaryButton text="sub" type="submit" />
     </MyForm>
   </React.Fragment>
 }
 
+
+export const TotalQuantity: React.FC = (props) => {
+  return <React.Fragment>
+    <Field name="totalPrice">
+      <TextField placeholder="totalPrice" />
+    </Field>
+    <Field name="" dependencies={['quantity', 'price']}>
+      {(_, _m, f) => {
+        const quantity = f.getFieldValue('quantity') || 0;
+        const price = f.getFieldValue('price') || 0;
+        f.setFields([{
+          name: 'totalPrice',
+          value: quantity * price
+        }])
+        return null;
+      }}
+    </Field>
+  </React.Fragment>
+}
 
 export const StockSearch: React.FC = () => {
   const InQuantity: React.FC<{ form: FormInstance }> = (props) => {
@@ -36,10 +56,13 @@ export const StockSearch: React.FC = () => {
     useEffect(() => {
       const price = form.getFieldValue('price');
       const timeout = setTimeout(() => {
-        
+        console.log('set price')
         form.setFields([{
           name: 'quantity',
-          value: price + '元'
+          value: price * 4
+        }, {
+          name: 'price',
+          value: 99
         }])
         form.validateFields([['quantity']])
       }, 1000)
@@ -49,7 +72,7 @@ export const StockSearch: React.FC = () => {
   }
   return <React.Fragment>
     <Field name="" dependencies={[['price']]}>
-      {(c, m, f) => { console.log('rd'); return <InQuantity form={f} />}}
+      {(c, m, f) => { console.log('rd'); return <InQuantity form={f} /> }}
     </Field>
   </React.Fragment>
 }
