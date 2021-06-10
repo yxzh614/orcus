@@ -4,6 +4,8 @@ import { bindCallback, Observable, Subject } from 'rxjs';
 import { setInterval, setTimeout } from 'timers';
 import Form, { Field } from 'rc-field-form';
 
+import { RecoilRoot } from 'recoil';
+
 const observable = new Observable<string>(subscriber => {
   subscriber.next('1');
   subscriber.next('2');
@@ -58,18 +60,25 @@ function App() {
   })
   return (
     <div className="App">
-      <Form
-        onValuesChange={(v) => {
-          $callback(v).subscribe({
-            next: handleValue
-          })
-        }}
-      >
-        <Field name={'price'}>
-          <input />
-        </Field>
-        <button onClick={() => {getPrice();setGetPriceClicked(true)}} >getPrice</button>
-      </Form>
+      <RecoilRoot>
+        <Form
+          onValuesChange={(v) => {
+            $callback(v).subscribe({
+              next: handleValue
+            })
+          }}
+        >
+          <Field name={'price'}>
+            <input />
+          </Field>
+          <button onClick={() => {
+            if (!getPriceClicked) {
+              setGetPriceClicked(true)
+            }
+            getPrice();
+          }} >getPrice</button>
+        </Form>
+      </RecoilRoot>
     </div>
   );
 }
